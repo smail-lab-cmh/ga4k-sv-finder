@@ -33,7 +33,8 @@ To search for a specific gene, use:
 ### For Coordinates
 To search by genomic coordinates:  
 
-`python3 script.py chr3:179121491-179374301`
+`python3 script.py`  
+`chr3:179121491-179374301`  
 
 ### For Query Files
 To run multiple queries from a file:  
