@@ -66,7 +66,7 @@ def main():
     args = parser.parse_args()
 
     dir_path = os.path.dirname(os.path.abspath(__file__))
-    data_file_path = os.path.join(dir_path, '03182024-ga4k-sv.tsv')
+    data_file_path = os.path.join(dir_path, '03192024-ga4k-sv.tsv')
     data = load_data(data_file_path)
 
     accumulated_results = pd.DataFrame()
