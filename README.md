@@ -26,11 +26,14 @@ After installing Python, you can install Pandas using pip:
 `pip install pandas`  
 
 ## Application Usage
+Navigate the command line to the directory where you have downloaded the raw data tsv and ga4ksvf-app.py (`cd path/to/your/download`)
 
+Execute the following command:
 `python3 ga4ksvf-app.py`
 
 ## Command Line Usage
-GA4K SV Finder supports three modes of operation  
+GA4K SV Finder supports three modes of operation.
+Navigate the command line to the directory where you have downloaded the raw data tsv and ga4ksvf-cmd.py (`cd path/to/your/download`)
 
 ### Genes
 To search for a specific gene, use:  
