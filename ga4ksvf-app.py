@@ -14,9 +14,9 @@ data_file_path = os.path.join(dir_path, '03192024-ga4k-sv.tsv')
 dtype_spec = {
     'start': 'Int64',
     'end': 'Int64',
-    'cohort_af': float,
-    'amr_af': float,
-    'eur_af': float,
+    'cohort_freq': float,
+    'amr_freq': float,
+    'eur_freq': float,
 }
 
 data = pd.read_csv(data_file_path, delimiter='\t', dtype=dtype_spec)
@@ -47,10 +47,10 @@ def search_sv(query=None):
         filt_data = data[(data['chrom'] == chromosome) & 
                          (data['start'] <= end) & 
                          (data['end'] >= start) & 
-                         (data['cohort_af'] >= 0.004)]
+                         (data['cohort_freq'] >= 0.004)]
     else:  # Gene search
         filt_data = data[(data['gene_name'].str.upper() == gene_name) & 
-                         (data['cohort_af'] >= 0.004)]
+                         (data['cohort_freq'] >= 0.004)]
 
     filt_data = filt_data.drop_duplicates()
     accum_results = pd.concat([accum_results, filt_data]).drop_duplicates().reset_index(drop=True)

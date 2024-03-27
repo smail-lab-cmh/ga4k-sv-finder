@@ -18,21 +18,21 @@ def search_sv(query, data, accumulated_results):
         filt_data = data[(data['chr'] == chromosome) &
                          (data['start'] <= end) &
                          (data['end'] >= start) &
-                         (data['cohort-af'] >= 0.004)]
+                         (data['cohort-freq'] >= 0.004)]
     else:
         filt_data = data[(data['overlap-gene-name'].str.upper() == gene_name) &
-                         (data['cohort-af'] >= 0.004)]
-    filt_data = filt_data.drop_duplicates(subset=['chr', 'start', 'end', 'length', 'type', 'overlap-gene-id', 'overlap-gene-name', 'cohort-af', 'amr-af', 'eur-af'])
+                         (data['cohort-freq'] >= 0.004)]
+    filt_data = filt_data.drop_duplicates(subset=['chr', 'start', 'end', 'length', 'type', 'overlap-gene-id', 'overlap-gene-name', 'cohort-freq', 'amr-freq', 'eur-freq'])
     accumulated_results = pd.concat([accumulated_results, filt_data]).drop_duplicates().reset_index(drop=True)
     return accumulated_results
 
 def load_data(filepath):
     dtype_spec = {
-        'cohort-af': float,
-        'amr-af': float,
-        'eur-af': float
+        'cohort-freq': float,
+        'amr-freq': float,
+        'eur-freq': float
     }
-    column_names = ['chr', 'start', 'end', 'length', 'type', 'overlap-gene-id', 'overlap-gene-name', 'cohort-af', 'amr-af', 'eur-af']
+    column_names = ['chr', 'start', 'end', 'length', 'type', 'overlap-gene-id', 'overlap-gene-name', 'cohort-freq', 'amr-freq', 'eur-freq']
     data = pd.read_csv(filepath, delimiter='\t', names=column_names, dtype=dtype_spec, skiprows=1)
     
     data['start'] = pd.to_numeric(data['start'], errors='coerce').astype('Int64')
