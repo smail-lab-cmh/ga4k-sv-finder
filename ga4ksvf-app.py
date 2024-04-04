@@ -9,14 +9,14 @@ root.title("GA4K SV Finder")
 root.geometry("600x400")
 
 dir_path = os.path.dirname(os.path.abspath(__file__))
-data_file_path = os.path.join(dir_path, '03192024-ga4k-sv.tsv')
+data_file_path = os.path.join(dir_path, '04042024-ga4k-af.tsv')
 
 dtype_spec = {
-    'start': 'Int64',
-    'end': 'Int64',
-    'cohort_freq': float,
-    'amr_freq': float,
-    'eur_freq': float,
+    'Start': 'Int64',
+    'End': 'Int64',
+    'cohort_af': float, 
+    'Homozygotes': 'Int64',
+    'cohort_freq': float 
 }
 
 data = pd.read_csv(data_file_path, delimiter='\t', dtype=dtype_spec)
@@ -44,13 +44,14 @@ def search_sv(query=None):
     chromosome, start, end, gene_name = parse_query(query)
 
     if gene_name is None:
-        filt_data = data[(data['chrom'] == chromosome) & 
-                         (data['start'] <= end) & 
-                         (data['end'] >= start) & 
+        filt_data = data[(data['Chrom'] == chromosome) & 
+                         (data['Start'] <= end) & 
+                         (data['End'] >= start) & 
                          (data['cohort_freq'] >= 0.004)]
-    else:  # Gene search
-        filt_data = data[(data['gene_name'].str.upper() == gene_name) & 
+    else:  
+        filt_data = data[data['GeneName'].str.split(', ').apply(lambda x: gene_name in x) & 
                          (data['cohort_freq'] >= 0.004)]
+
 
     filt_data = filt_data.drop_duplicates()
     accum_results = pd.concat([accum_results, filt_data]).drop_duplicates().reset_index(drop=True)

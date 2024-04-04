@@ -2,6 +2,15 @@ import argparse
 import os
 import pandas as pd
 
+def load_data(filepath):
+    data = pd.read_csv(filepath, delimiter='\t', skiprows=1, na_values='.')
+    data.columns = ['Chrom', 'Start', 'End', 'Length', 'Type', 'cohort_af', 'Homozygotes', 'GeneID', 'GeneName', 'cohort_freq']
+    numeric_cols = ['Start', 'End', 'cohort_af', 'cohort_freq']
+    for col in numeric_cols:
+        data[col] = pd.to_numeric(data[col], errors='coerce')
+    data[['Start', 'End']] = data[['Start', 'End']].astype('Int64')
+    return data
+
 def parse_query(query):
     if ':' in query:
         parts = query.split(':')
@@ -15,34 +24,24 @@ def parse_query(query):
 def search_sv(query, data, accumulated_results):
     chromosome, start, end, gene_name = parse_query(query)
     if gene_name is None:
-        filt_data = data[(data['chr'] == chromosome) &
-                         (data['start'] <= end) &
-                         (data['end'] >= start) &
-                         (data['cohort-freq'] >= 0.004)]
+        filt_data = data[(data['Chrom'] == chromosome) &
+                         (data['Start'].astype('Int64') <= end) &
+                         (data['End'].astype('Int64') >= start) &
+                         (data['cohort_freq'] >= 0.004)]
     else:
-        filt_data = data[(data['overlap-gene-name'].str.upper() == gene_name) &
-                         (data['cohort-freq'] >= 0.004)]
-    filt_data = filt_data.drop_duplicates(subset=['chr', 'start', 'end', 'length', 'type', 'overlap-gene-id', 'overlap-gene-name', 'cohort-freq', 'amr-freq', 'eur-freq'])
+        filt_data = data[data['GeneName'].apply(lambda x: gene_name in [gene.strip().upper() for gene in x.split(',')] if isinstance(x, str) else False) &
+                         (data['cohort_freq'] >= 0.004)]
+
+    filt_data = filt_data.drop_duplicates(subset=['Chrom', 'Start', 'End', 'Length', 'Type', 'GeneID', 'GeneName', 'cohort_freq'])
     accumulated_results = pd.concat([accumulated_results, filt_data]).drop_duplicates().reset_index(drop=True)
     return accumulated_results
 
-def load_data(filepath):
-    dtype_spec = {
-        'cohort-freq': float,
-        'amr-freq': float,
-        'eur-freq': float
-    }
-    column_names = ['chr', 'start', 'end', 'length', 'type', 'overlap-gene-id', 'overlap-gene-name', 'cohort-freq', 'amr-freq', 'eur-freq']
-    data = pd.read_csv(filepath, delimiter='\t', names=column_names, dtype=dtype_spec, skiprows=1)
-    
-    data['start'] = pd.to_numeric(data['start'], errors='coerce').astype('Int64')
-    data['end'] = pd.to_numeric(data['end'], errors='coerce').astype('Int64')
-    
-    return data
 
 def display_results(accumulated_results):
     if not accumulated_results.empty:
         print(accumulated_results.to_string(index=False) + "\n")
+    else:
+        print("No results found.\n")
 
 def process_file_queries(filepath, data, accumulated_results):
     with open(filepath, 'r') as file:
@@ -66,12 +65,11 @@ def main():
     args = parser.parse_args()
 
     dir_path = os.path.dirname(os.path.abspath(__file__))
-    data_file_path = os.path.join(dir_path, '03192024-ga4k-sv.tsv')
+    data_file_path = os.path.join(dir_path, '04042024-ga4k-af.tsv')
     data = load_data(data_file_path)
 
-    accumulated_results = pd.DataFrame()
-
     if args.file:
+        accumulated_results = pd.DataFrame()
         process_file_queries(args.file, data, accumulated_results)
         if args.export:
             export_data(accumulated_results)
@@ -81,11 +79,13 @@ def main():
             if query.lower() == 'exit':
                 break
             if query:
+                accumulated_results = pd.DataFrame()  # Reset for each query
                 accumulated_results = search_sv(query, data, accumulated_results)
                 display_results(accumulated_results)
             if args.export:
                 export_data(accumulated_results)
                 break
+
 
 if __name__ == "__main__":
     main()

@@ -1,7 +1,16 @@
-# GA4K SV Finder
-GA4K SV Finder is a tool to search for structural variations (SV) and associated genes from 497 probands in the Genomics Answers for Kids (GA4K) cohort (2023) with HiFi long read genomes processed with PBSV (v2.6.2). Whether you're interested in specific genes, SV coordinates, variant frequencies, or a mix (query file), GA4K SV Finder provides a look into the GA4K rare disease cohort.
+## Changelog:
+### 04/04/2024 - 
+Re-uploaded raw data tsv.
+Included homozygote count.
+Updated cohort allele frequency (cohort_af) accuracy for observed genotypes.
+Removed frequencies for european (eur) and admixed american (amr) ancestries based on somalier probabilities.
+### 04/01/2024 - 
+We identified some issues with calculations in the tsv file and have removed the file until fixed. We will update with the corrected file soon.
 
-Note: SVs were aligned using human genome reference hg38. Cohort alleles with frequencies that would identify a single person have been excluded. Additionally, frequencies for european (eur) and admixed american (amr) ancestries are provided based on somalier probabilities (https://github.com/brentp/somalier).
+# GA4K SV Finder
+GA4K SV Finder is a tool to search for structural variants (SV) and associated genes from 497 probands in the Genomics Answers for Kids (GA4K) cohort (2023) with HiFi long read genomes processed with PBSV (v2.6.2). Whether you're interested in specific genes, SV coordinates, variant frequencies, or a mix (query file), GA4K SV Finder provides a look into the GA4K rare disease cohort.
+
+Note: SVs were aligned using human genome reference hg38. Cohort alleles with frequencies that would identify a single person have been excluded. 
 
 ## Dependencies
 - Python 3.7 or higher
