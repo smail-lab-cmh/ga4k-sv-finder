@@ -4,8 +4,8 @@ import pandas as pd
 
 def load_data(filepath):
     data = pd.read_csv(filepath, delimiter='\t', skiprows=1, na_values='.')
-    data.columns = ['Chrom', 'Start', 'End', 'Length', 'Type', 'cohort_af', 'Homozygotes', 'GeneID', 'GeneName', 'cohort_freq']
-    numeric_cols = ['Start', 'End', 'cohort_af', 'cohort_freq']
+    data.columns = ['Chrom', 'Start', 'End', 'Length', 'Type', 'CohortAF', 'Homozygotes', 'GeneID', 'GeneName', 'CohortFreq']
+    numeric_cols = ['Start', 'End', 'CohortAF', 'CohortFreq']
     for col in numeric_cols:
         data[col] = pd.to_numeric(data[col], errors='coerce')
     data[['Start', 'End']] = data[['Start', 'End']].astype('Int64')
@@ -27,12 +27,12 @@ def search_sv(query, data, accumulated_results):
         filt_data = data[(data['Chrom'] == chromosome) &
                          (data['Start'].astype('Int64') <= end) &
                          (data['End'].astype('Int64') >= start) &
-                         (data['cohort_freq'] >= 0.004)]
+                         (data['CohortFreq'] >= 0.004)]
     else:
         filt_data = data[data['GeneName'].apply(lambda x: gene_name in [gene.strip().upper() for gene in x.split(',')] if isinstance(x, str) else False) &
-                         (data['cohort_freq'] >= 0.004)]
+                         (data['CohortFreq'] >= 0.004)]
 
-    filt_data = filt_data.drop_duplicates(subset=['Chrom', 'Start', 'End', 'Length', 'Type', 'GeneID', 'GeneName', 'cohort_freq'])
+    filt_data = filt_data.drop_duplicates(subset=['Chrom', 'Start', 'End', 'Length', 'Type', 'GeneID', 'GeneName', 'CohortFreq'])
     accumulated_results = pd.concat([accumulated_results, filt_data]).drop_duplicates().reset_index(drop=True)
     return accumulated_results
 
