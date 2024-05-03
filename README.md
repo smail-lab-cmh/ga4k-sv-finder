@@ -1,5 +1,7 @@
 
 ## Changelog:
+### 05/03/2024 - 
+Amended end coordinate of insertion calls and overlapping gene IDs
 ### 04/04/2024 - 
 Re-uploaded raw data tsv.
 Included homozygote count.

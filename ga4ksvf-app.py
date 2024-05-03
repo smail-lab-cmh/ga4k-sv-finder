@@ -9,7 +9,7 @@ root.title("GA4K SV Finder")
 root.geometry("600x400")
 
 dir_path = os.path.dirname(os.path.abspath(__file__))
-data_file_path = os.path.join(dir_path, '04042024-ga4k-af.tsv')
+data_file_path = os.path.join(dir_path, '05032024-ga4k-af.tsv')
 
 dtype_spec = {
     'Start': 'Int64',

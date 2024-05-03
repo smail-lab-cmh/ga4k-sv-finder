@@ -65,7 +65,7 @@ def main():
     args = parser.parse_args()
 
     dir_path = os.path.dirname(os.path.abspath(__file__))
-    data_file_path = os.path.join(dir_path, '04042024-ga4k-af.tsv')
+    data_file_path = os.path.join(dir_path, '05032024-ga4k-af.tsv')
     data = load_data(data_file_path)
 
     if args.file:
