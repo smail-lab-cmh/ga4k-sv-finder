@@ -1,7 +1,13 @@
 
 ## Changelog:
+### 06/20/2024 -
+Updated cohort size 497 samples > 1,566 samples.
+New tsv file offers SURVIVOR merged SV data as an optional input.
+Apps now have option to select data file for query (ie merged or unmerged).
+Command line tool has additional option flags (see below).
+Cohort information has been updated.
 ### 05/03/2024 - 
-Amended end coordinate of insertion calls and overlapping gene IDs
+Amended end coordinate of insertion calls and overlapping gene IDs.
 ### 04/04/2024 - 
 Re-uploaded raw data tsv.
 Included homozygote count.
@@ -11,10 +17,30 @@ Removed frequencies for european (eur) and admixed american (amr) ancestries bas
 We identified some issues with calculations in the tsv file and have removed the file until fixed. We will update with the corrected file soon.
 
 # GA4K SV Finder
-GA4K SV Finder is a tool to search for structural variants (SV) and associated genes from 497 probands in the Genomics Answers for Kids (GA4K) cohort (2023) with HiFi long read genomes processed with PBSV (v2.6.2). Whether you're interested in specific genes, SV coordinates, variant frequencies, or a mix (query file), GA4K SV Finder provides a look into the GA4K rare disease cohort.
+GA4K SV Finder is a tool to search for structural variants (SV) and associated genes from 1,566 individuals in the Genomics Answers for Kids (GA4K) cohort (2024) with HiFi long read genomes processed with PBSV (v2.6.2). Whether you're interested in specific genes, SV coordinates, variant frequencies, or a mix (query file), GA4K SV Finder provides a look into the GA4K rare disease cohort.
 
-Note: SVs were aligned using human genome reference hg38. Cohort alleles with frequencies that would identify a single person have been excluded. 
+## File contents
+Column Names
+------------
+Chr - Chromosome location of the SV
+Start - Start coordinate of the SV
+End - End coordinate of the SV
+Length - Length of the SV
+Type - Type of the SV (DEL, DUP, INS, INV)
+CohortAlleleFreq - Allele frequency of SV in cohort population
+Homozygotes - Number of homozygotes for SV
+VariantCount - Count of individuals with SV
+CohortVariantFreq - Population frequency of SV (VariantCount / Cohort)
+GeneID - Ensemble gene ID for SV intersected genes
+GeneName - Gene name for SV intersected genes
 
+Additional information
+----------------------
+This data reflects long read HiFi WGS for 1,566 individuals in the Genomic Answers for Kids (GA4K) study.
+All Structural variants were called with PBSV (v2.6.2) using reference genome GRCh38.
+Gene intersects were tested against all 19,291 protein coding genes from Gencode release v26 (GRCh38).
+The unmerged tsv only collapses identically called variants across individuals.
+The merged tsv data comes from a single merged VCF from all individuals using SURVIVOR (v1.0.7) merge options 1000 1 1 1 0 50 (max dist, callers, type specific, strand specific, disabled, min bp)
 
 ## Dependencies
 - Python 3.7 or higher
@@ -61,20 +87,20 @@ To search by genomic coordinates:
 ### Query Files (Both)
 To run multiple queries from a file:  
 
-`python3 ga4ksvf-cmd.py [options]` 
-
-- `-f FILE`, `--file FILE`: Process queries from a specified file.
-- `-e`, `--export`: Export accumulated query results to a CSV file. Prompts for a file name, defaulting to `result.csv`.
-
-### Interactive Mode
-
-If the script is run without any arguments, it enters interactive mode. In this mode, you can input queries directly into the terminal. Type 'exit' to quit the interactive mode.
-`python3 ga4ksvf-cmd.py`
-
-### Example queries.txt content:
+### Example queries.txt content
 chr3:179121491-179374301  
 chr16:53841057-53841060  
 chr9:121275764-121307053  
 MFN1  
 FTO  
 GSN  
+
+### Options
+`python3 ga4ksvf-cmd.py [options]` 
+
+- `-f FILE`, `--file FILE`: Process queries from a specified file.
+- `-q`, `--query`: Query string. Either coordinate (chr:star-end), gene name (GENE1), or Ensembl gene ID (ENSG000).
+- `-qf`, `--query-file`: File containing queries, one per line (see example in README).
+- `-e`, `--export`: Export accumulated query results to a specified filename.ext.
+
+
