@@ -1,19 +1,21 @@
 
-## Changelog:
-### 06/20/2024 -  
+### Changelog:
+#### 07/17/2024 -  
+CohortAlleleFreq now reflects 4 decimal places instead of 3.
+#### 06/20/2024 -  
 Updated cohort size 497 samples > 1,566 samples.  
 New tsv file offers SURVIVOR merged SV data as an optional input.  
 Apps now have option to select data file for query (ie merged or unmerged).  
 Command line tool has additional option flags (see below).  
 Cohort information has been updated.  
-### 05/03/2024 -  
+#### 05/03/2024 -  
 Amended end coordinate of insertion calls and overlapping gene IDs.  
-### 04/04/2024 -  
+#### 04/04/2024 -  
 Re-uploaded raw data tsv.  
 Included homozygote count.  
 Updated cohort allele frequency (cohort_af) accuracy for observed genotypes.  
 Removed frequencies for european (eur) and admixed american (amr) ancestries based on somalier probabilities.  
-### 04/01/2024 -  
+#### 04/01/2024 -  
 We identified some issues with calculations in the tsv file and have removed the file until fixed. We will update with the corrected file soon.  
 
 # GA4K SV Finder  
