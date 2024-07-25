@@ -1,4 +1,7 @@
-
+#### Associated pre-print:
+Mapping structural variants to rare disease genes using long-read whole genome sequencing and trait-relevant polygenic scores
+Cas LeMaster, Carl Schwendinger-Schreck, Bing Ge, Warren A. Cheung, Rebecca McLennan, Jeffrey J. Johnston, Tomi Pastinen, Craig Smail
+medRxiv 2024.03.15.24304216; doi: https://doi.org/10.1101/2024.03.15.24304216
 ### Changelog:
 #### 07/17/2024 -  
 CohortAlleleFreq now reflects 4 decimal places instead of 3.
@@ -20,6 +23,7 @@ We identified some issues with calculations in the tsv file and have removed the
 
 # GA4K SV Finder  
 GA4K SV Finder is a tool to search for structural variants (SV) and associated genes from 1,566 individuals in the Genomics Answers for Kids (GA4K) cohort (2024) with HiFi long read genomes processed with PBSV (v2.6.2). Whether you're interested in specific genes, SV coordinates, variant frequencies, or a mix (query file), GA4K SV Finder provides a look into the GA4K rare disease cohort.
+
 
 ## File contents  
 Column Names  
