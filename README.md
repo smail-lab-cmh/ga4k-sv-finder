@@ -1,5 +1,8 @@
 
 ### Changelog:
+#### 08/23/2024 - 
+Demographics have been added to the Additional Information section.
+We identified an issue with VariantCount and CohortVariantFreq in the SURVIVOR merged tsv where some counts were inflated due to parsing issues. We have replaced values in these columns with "NA" for the time being.
 #### 07/17/2024 -  
 CohortAlleleFreq now reflects 4 decimal places instead of 3.
 #### 06/20/2024 -  
