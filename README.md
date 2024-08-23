@@ -4,8 +4,8 @@ Cas LeMaster, Carl Schwendinger-Schreck, Bing Ge, Warren A. Cheung, Rebecca McLe
 medRxiv 2024.03.15.24304216; doi: https://doi.org/10.1101/2024.03.15.24304216
 ### Changelog:
 #### 08/23/2024 - 
-Demographics have been added to the Additional Information section.
-We identified an issue with VariantCount and CohortVariantFreq in the SURVIVOR merged tsv where some counts were inflated due to parsing issues. We have replaced values in these columns with "NA" for the time being.
+Demographics have been added to the Additional Information section.  
+We identified an issue with VariantCount and CohortVariantFreq in the SURVIVOR merged tsv where some counts were inflated due to parsing issues. We have replaced values in these columns with "NA" for the time being.  
 #### 07/17/2024 -  
 CohortAlleleFreq now reflects 4 decimal places instead of 3.
 #### 06/20/2024 -  
@@ -46,6 +46,8 @@ GeneName - Gene name for SV intersected genes
 Additional information  
 ----------------------  
 This data reflects long read HiFi WGS for 1,566 individuals in the Genomic Answers for Kids (GA4K) study.  
+Sample sex summary: 777 males, 745 females, 17 unknowns  
+Sample ancestry (somalier) summary: 1234 European, 239 Admixed American, 53 African, 23 South Asian, and 17 East Asian.  
 All Structural variants were called with PBSV (v2.6.2) using reference genome GRCh38.  
 Gene intersects were tested against all 19,291 protein coding genes from Gencode release v26 (GRCh38).  
 The unmerged tsv only collapses identically called variants across individuals.  
